@@ -1,0 +1,34 @@
+{
+    "name": "ControlIsometric",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "6b75d9ab-a84f-42f1-a1ec-f0db391b6433",
+            "actions": [
+                {
+                    "name": "MouseLeftClick",
+                    "type": "Button",
+                    "id": "ff121655-d3dd-442c-a947-ba06238b748e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dac65a08-0d57-4263-8186-1554b2318262",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseLeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

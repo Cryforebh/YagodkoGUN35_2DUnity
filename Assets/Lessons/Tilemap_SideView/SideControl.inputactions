@@ -1,0 +1,74 @@
+{
+    "name": "SideControl",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "1735c598-3cf2-4fea-bfe3-126f2561c860",
+            "actions": [
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "40e74ce6-605a-468a-8b29-5c7ebb8dcdf2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "e21307d7-667b-4ec8-931d-c8081d5dd771",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rigth",
+                    "type": "Button",
+                    "id": "70ad7276-f7ac-4f62-a5bd-50aa73f193da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "259986c3-733a-41e0-8665-6c3b79825c45",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc549d27-69b1-4a82-8b6f-58906b18809b",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da469bc7-92ee-4621-93da-6386490adda8",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rigth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
