@@ -8,10 +8,12 @@ public class ButtonTutorial : MonoBehaviour
     [SerializeField] private AudioClip _audioClick;
 
     private AudioSource _audioSource;
+    private Animation _animation;
 
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
+        _animation = GetComponent<Animation>();
     }
 
     private void OnEnable()
@@ -22,6 +24,7 @@ public class ButtonTutorial : MonoBehaviour
     private void _interactObject_ButtonClickEvent()
     {
         _canvasTutorial.enabled = !_canvasTutorial.enabled;
+        _animation.Play();
         _audioSource.PlayOneShot(_audioClick);
     }
 

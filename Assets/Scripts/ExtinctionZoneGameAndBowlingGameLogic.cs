@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 
 public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
@@ -32,6 +31,7 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
 
     public event Action StrikeEvent;
     public event Action SpareEvent;
+    public event Action WinEvent;
 
     private void Awake()
     {
@@ -60,11 +60,17 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
     private void Start()
     {
         _startPosition = _objectTransform.position;
+        _scoreSkittles.EndGameEvent += _scoreSkittles_EndGameEvent;
+    }
+
+    private void _scoreSkittles_EndGameEvent()
+    {
+        WinEvent?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_scoreSkittles.IsEndGame) 
+        if (_scoreSkittles.IsEndGame)
         {
             _scoreSkittles.ScoreValue = 0;
             _scoreSkittles.IsEndGame = false;

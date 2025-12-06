@@ -9,9 +9,12 @@ public class PlayerInteractObject : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private string _textActivated = "Зажмите ЛКМ - чтобы взять.";
     [SerializeField] private TMP_Text _tMPText;
-    [SerializeField] private float _distanceActive = 2.5f;
     [SerializeField] private float _attractionSpeed = 3f;
     [SerializeField] private float _throwForce = 100f;
+    [Header("Настройка положения динамического обьека в руках:")]
+    [SerializeField] private bool _isCenterActioanInCenterCamera = false;
+    [SerializeField] private float _distanceMaxActive = 2.5f;
+    [SerializeField] private float _addHeightCenterActioan = 0.5f;
 
     private InputControl _playerInput;
     private GameObject _targetObject;
@@ -71,7 +74,7 @@ public class PlayerInteractObject : MonoBehaviour
         if (_isObjectGrabbed && !_isButton)
         {
             _distanceToObject += scroll;
-            _distanceToObject = Mathf.Clamp(_distanceToObject, 1f, _distanceActive);
+            _distanceToObject = Mathf.Clamp(_distanceToObject, 1f, _distanceMaxActive);
             print("Дальность изменена");
         }
     }
@@ -108,14 +111,20 @@ public class PlayerInteractObject : MonoBehaviour
         {
             if (_isObjectGrabbed && !_isButton)
             {
-                //_pointEndAction = _camera.transform.position + _camera.transform.forward * _distanceToObject; - Старый вариант,
-                //больше похоже на игру REPO, обьект перед глазами, неудобно целиться.
 
-                _pointEndAction = transform.position  + _camera.transform.forward * _distanceToObject;
+                if (_isCenterActioanInCenterCamera)
+                {
+                    _pointEndAction = _camera.transform.position + _camera.transform.forward * _distanceToObject;
+                }
+                else
+                {
+                    _pointEndAction = (transform.position + Vector3.up * _addHeightCenterActioan) + _camera.transform.forward * _distanceToObject;
+                }
+
                 _targetRigidbody.velocity = (_pointEndAction - _targetObject.transform.position) * _attractionSpeed * Time.deltaTime;
                 _targetRigidbody.angularVelocity = Vector3.zero;
 
-                Debug.DrawLine(_camera.transform.position, _pointEndAction);
+                Debug.DrawLine(_camera.transform.position, _pointEndAction, Color.green);
             }
             yield return null;
         }
@@ -139,7 +148,7 @@ public class PlayerInteractObject : MonoBehaviour
                         _targetObject = hitTarget;
                         var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
 
-                        if (distanceToObject <= _distanceActive)
+                        if (distanceToObject <= _distanceMaxActive)
                         {
                             _isButton = false;
                             _isObjectInCenterCursor = true;
@@ -156,7 +165,7 @@ public class PlayerInteractObject : MonoBehaviour
                         _targetObject = hitTarget;
                         var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
 
-                        if (distanceToObject <= _distanceActive)
+                        if (distanceToObject <= _distanceMaxActive)
                         {
                             _isObjectInCenterCursor = false;
                             _tMPText.enabled = false;
@@ -185,7 +194,7 @@ public class PlayerInteractObject : MonoBehaviour
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(_camera.transform.position, _targetObject.transform.position);
-        Gizmos.DrawLine(_camera.transform.position, transform.position + _camera.transform.forward * _distanceActive);
+        //Gizmos.DrawLine(_camera.transform.position, _targetObject.transform.position);
+        Gizmos.DrawLine(_camera.transform.position, (transform.position + Vector3.up * _addHeightCenterActioan) + _camera.transform.forward * _distanceMaxActive);
     }
 }

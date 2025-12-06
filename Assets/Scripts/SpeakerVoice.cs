@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -17,6 +18,12 @@ public class SpeakerVoice : MonoBehaviour
     {
         _zoneGame.SpareEvent += _zoneGame_SpareEvent;
         _zoneGame.StrikeEvent += _zoneGame_StrikeEvent;
+        _zoneGame.WinEvent += _zoneGame_WinEvent;
+    }
+
+    private void _zoneGame_WinEvent()
+    {
+        DelaySound();
     }
 
     private void _zoneGame_StrikeEvent()
@@ -33,5 +40,12 @@ public class SpeakerVoice : MonoBehaviour
     {
         _zoneGame.SpareEvent -= _zoneGame_SpareEvent;
         _zoneGame.StrikeEvent -= _zoneGame_StrikeEvent;
+        _zoneGame.WinEvent -= _zoneGame_WinEvent;
+    }
+    
+    private IEnumerator DelaySound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _audioSource.PlayOneShot(_audioClips[2]);
     }
 }

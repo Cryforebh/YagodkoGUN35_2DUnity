@@ -1654,9 +1654,11 @@ MonoBehaviour:
   _textActivated: "\u0417\u0430\u0436\u043C\u0438\u0442\u0435 \u041B\u041A\u041C
     - \u0447\u0442\u043E\u0431\u044B \u0432\u0437\u044F\u0442\u044C."
   _tMPText: {fileID: 1181646529}
-  _distanceActive: 2.5
   _attractionSpeed: 1500
   _throwForce: 300
+  _isCenterActioanInCenterCamera: 0
+  _distanceMaxActive: 2.5
+  _addHeightCenterActioan: 0.5
 --- !u!1 &337452775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,10 +2900,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1003497307}
   - {fileID: 1368396168}
   - {fileID: 1756862088}
   - {fileID: 2108259326}
-  - {fileID: 1003497307}
   m_Father: {fileID: 986738534}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &692899085 stripped
@@ -3346,6 +3348,22 @@ AudioReverbFilter:
   m_LFReference: 250
   m_ReflectionsDelay: 0
   m_ReverbPreset: 27
+--- !u!114 &868699423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868699415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7b8d338bf0f7f943b6e7d6963c64e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _musicClips:
+  - {fileID: 8300000, guid: caf54f4bfe74ecc40ad96997cc26b409, type: 3}
+  - {fileID: 8300000, guid: e6332768055c1204a88358ce2d5c1fe7, type: 3}
+  - {fileID: 8300000, guid: 392b0846623328e489416019c966f04a, type: 3}
 --- !u!1 &876989897
 GameObject:
   m_ObjectHideFlags: 0
@@ -3712,8 +3730,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003497306}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1261, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12610054, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3741,7 +3759,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.01
+    m_Bias: 0.013
     m_NormalBias: 3
     m_NearPlane: 0.005013461
     m_CullingMatrixOverride:
@@ -5501,6 +5519,7 @@ MonoBehaviour:
   _audioClips:
   - {fileID: 8300000, guid: 974f4cb1652d0ec439f97dd0414dc828, type: 3}
   - {fileID: 8300000, guid: 1aa064c6c4bf3b4478fd7be8e34648b9, type: 3}
+  - {fileID: 8300000, guid: ccb830e7d4ab09942a8417612d776ce4, type: 3}
 --- !u!1 &1368396167
 GameObject:
   m_ObjectHideFlags: 0
@@ -5515,6 +5534,7 @@ GameObject:
   - component: {fileID: 1368396173}
   - component: {fileID: 1368396169}
   - component: {fileID: 1368396172}
+  - component: {fileID: 1368396174}
   m_Layer: 0
   m_Name: Button
   m_TagString: Button
@@ -5721,6 +5741,22 @@ MonoBehaviour:
   _player: {fileID: 322658237}
   _canvasTutorial: {fileID: 1648022035}
   _audioClick: {fileID: 8300000, guid: f21ddb456c6ae0541aa83440e19c190c, type: 3}
+--- !u!111 &1368396174
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368396167}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: c7b847cb7b999ac4cbf0a7931caebfd5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: c7b847cb7b999ac4cbf0a7931caebfd5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1368599662
 GameObject:
   m_ObjectHideFlags: 0
@@ -9523,8 +9559,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2669287053064454858, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669287053064454858, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
       propertyPath: m_Volume
       value: 0.248
+      objectReference: {fileID: 0}
+    - target: {fileID: 2669287053064454858, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2669287053064454858, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
       propertyPath: BypassReverbZones
@@ -9586,6 +9630,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1393059701006742278, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 868699423}
     - targetCorrespondingSourceObject: {fileID: 1393059701006742278, guid: f4a04d50dc2975740b3f5b341eb5ad86, type: 3}
       insertIndex: -1
       addedObject: {fileID: 868699419}
