@@ -1,23 +1,29 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.UI.Button;
 
 public class PlayerInteractObject : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private string _textActivated = "Зажмите ЛКМ - чтобы взять.";
     [SerializeField] private TMP_Text _tMPText;
-    [SerializeField] private Rigidbody _targetObject;
     [SerializeField] private float _distanceActive = 2.5f;
     [SerializeField] private float _attractionSpeed = 3f;
     [SerializeField] private float _throwForce = 100f;
 
     private InputControl _playerInput;
+    private GameObject _targetObject;
+    private Rigidbody _targetRigidbody;
     private bool _isObjectInCenterCursor;
     private bool _isObjectGrabbed;
+    private bool _isButton;
     private float _distanceToObject;
 
     private Vector3 _pointEndAction;
+
+    public event Action ButtonClickEvent;
 
     private void Awake()
     {
@@ -52,17 +58,17 @@ public class PlayerInteractObject : MonoBehaviour
 
     private void ToThrow()
     {
-        if (_isObjectGrabbed)
+        if (_isObjectGrabbed && !_isButton)
         {
             _isObjectGrabbed = false;
-            _targetObject.AddForce(_camera.transform.forward * _throwForce, ForceMode.Impulse);
+            _targetRigidbody.AddForce(_camera.transform.forward * _throwForce, ForceMode.Impulse);
             print("Кинуто");
         }
     }
 
     private void ToMove(float scroll)
     {
-        if (_isObjectGrabbed)
+        if (_isObjectGrabbed && !_isButton)
         {
             _distanceToObject += scroll;
             _distanceToObject = Mathf.Clamp(_distanceToObject, 1f, _distanceActive);
@@ -72,18 +78,24 @@ public class PlayerInteractObject : MonoBehaviour
 
     private void ToTaking()
     {
-        if (_isObjectInCenterCursor)
+        if (_isObjectInCenterCursor && !_isButton)
         {
             _distanceToObject = Vector3.Distance(_camera.transform.position, _targetObject.transform.position);
+            _targetRigidbody = _targetObject.GetComponent<Rigidbody>();
             _isObjectGrabbed = true;
             _tMPText.enabled = false;
             print("Взято");
+        }
+        if (_isButton)
+        {
+            ButtonClickEvent?.Invoke();
+            print("Нажато");
         }
     }
 
     private void ToLower()
     {
-        if (_isObjectGrabbed)
+        if (_isObjectGrabbed && !_isButton)
         {
             _isObjectGrabbed = false;
             print("Отпущено");
@@ -94,14 +106,14 @@ public class PlayerInteractObject : MonoBehaviour
     {
         while (true)
         {
-            if (_isObjectGrabbed)
+            if (_isObjectGrabbed && !_isButton)
             {
                 //_pointEndAction = _camera.transform.position + _camera.transform.forward * _distanceToObject; - Старый вариант,
                 //больше похоже на игру REPO, обьект перед глазами, неудобно целиться.
 
                 _pointEndAction = transform.position  + _camera.transform.forward * _distanceToObject;
-                _targetObject.velocity = (_pointEndAction - _targetObject.transform.position) * _attractionSpeed * Time.deltaTime;
-                _targetObject.angularVelocity = Vector3.zero;
+                _targetRigidbody.velocity = (_pointEndAction - _targetObject.transform.position) * _attractionSpeed * Time.deltaTime;
+                _targetRigidbody.angularVelocity = Vector3.zero;
 
                 Debug.DrawLine(_camera.transform.position, _pointEndAction);
             }
@@ -120,17 +132,40 @@ public class PlayerInteractObject : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit))
                 {
-                    var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
+                    var hitTarget = hit.collider.gameObject;
 
-                    if (hit.collider.gameObject == _targetObject.gameObject && distanceToObject <= _distanceActive)
+                    if (hitTarget.tag == "Ball")
                     {
-                        _isObjectInCenterCursor = true;
-                        _tMPText.enabled = true;
+                        _targetObject = hitTarget;
+                        var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
+
+                        if (distanceToObject <= _distanceActive)
+                        {
+                            _isButton = false;
+                            _isObjectInCenterCursor = true;
+                            _tMPText.enabled = true;
+                        }
+                        else
+                        {
+                            _isObjectInCenterCursor = false;
+                            _tMPText.enabled = false;
+                        }
                     }
-                    else
+                    if (hitTarget.tag == "Button")
                     {
-                        _isObjectInCenterCursor = false;
-                        _tMPText.enabled = false;
+                        _targetObject = hitTarget;
+                        var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
+
+                        if (distanceToObject <= _distanceActive)
+                        {
+                            _isObjectInCenterCursor = false;
+                            _tMPText.enabled = false;
+                            _isButton = true;
+                        }
+                        else
+                        {
+                            _isButton = false;
+                        }
                     }
                 }
             }

@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
-public class ExtinctionZoneGame : MonoBehaviour
+public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
 {
     [SerializeField] private ScoreSkittles _scoreSkittles;
     [SerializeField] private Transform _objectTransform;
     [SerializeField] private GameObject _skittles;
     [SerializeField] private float _thresholdSkittles = 30f; // Допустимое отклонение от эталонных углов (в градусах)
 
-    private Collider _collider;
+    private Collider _colliderBall;
     private Vector3 _startPosition;
     private Skittle[] _allSkittles;
     private Dictionary<Skittle, Vector3> _allSkittlesStartPosition;
@@ -21,11 +22,13 @@ public class ExtinctionZoneGame : MonoBehaviour
     private bool _isStrike = false;
     private bool _isSpare = false;
     private int _countRemainingSkittles = 0;
-    private int _countSkittles;
+    private int _shotDownLastTimeSkittles;
+    private Skittle _currentSkittle;
+
 
     public event Action OnCollisionEnter;
-    public event Action OnCollisionExit;
-    public event Action OnCollisionExitEarly;
+    public event Action ReloadeEvent;
+    public event Action ReloadeEarlyEvent;
 
     public event Action StrikeEvent;
     public event Action SpareEvent;
@@ -61,45 +64,74 @@ public class ExtinctionZoneGame : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_scoreSkittles.IsEndGame) 
+        {
+            _scoreSkittles.ScoreValue = 0;
+            _scoreSkittles.IsEndGame = false;
+        }
+
         if (other.gameObject.tag == "Ball")
         {
-            _collider = other;
-            other.gameObject.SetActive(false);
+            _colliderBall = other;
             StartCoroutine(ProcessReloade());
             OnCollisionEnter?.Invoke();
         }
         if (other.gameObject.tag == "Skittle")
         {
-            other.gameObject.SetActive(false);
-            _scoreSkittles.ScoreValue += 1;
-            //print("Счет увеличен");
+            _currentSkittle = other.gameObject.GetComponent<Skittle>();
+            _currentSkittle.SkittleOut = true;
         }
     }
 
     private void ThrowResultInSkittles()
     {
-        if (_scoreSkittles.IsEndGame) return;
-
         _numberOfAttempts += 1;
         Debug.LogWarning($"Был {_numberOfAttempts} бросок!");
 
         foreach (var skittle in _allSkittles)
         {
-            if (!IsStandingQuaternionSkittle(skittle) && skittle.gameObject.activeSelf == true)
+            if ((!IsStandingQuaternionSkittle(skittle) || skittle.SkittleOut == true) && skittle.gameObject.activeSelf == true)
             {
                 skittle.gameObject.SetActive(false);
                 _scoreSkittles.ScoreValue += 1;
-                //print("Счет увеличен");
             }
             SetInitialPropertySkittle(skittle);
         }
 
+        // Кегли еще остались
+        if (IsInStockSkittles())
+        {
+            // Первый бросок
+            if (_numberOfAttempts == 1)
+            {
+                _shotDownLastTimeSkittles = _allSkittles.Length - _countRemainingSkittles;
+                if (_isStrike || _isSpare)
+                {
+                    _isSpare = false;
+                    _scoreSkittles.ScoreValue += _shotDownLastTimeSkittles;
+                    Debug.Log($"Добавленно {_shotDownLastTimeSkittles} бонусных очков!");
+                }
+            }
+            // Второй бросок
+            if (_numberOfAttempts >= 2)
+            {
+                _shotDownLastTimeSkittles = _allSkittles.Length - (_shotDownLastTimeSkittles + _countRemainingSkittles);
+                if (_isStrike)
+                {
+                    _isStrike = false;
+                    _scoreSkittles.ScoreValue += _shotDownLastTimeSkittles;
+                    Debug.Log($"Добавленно {_shotDownLastTimeSkittles} бонусных очков!");
+                }
+                RespawnSkittles();
+            }
+        }
         // Выбиты все кегли
-        if (!IsInStockSkittles())
+        else
         {
             // Страйк
             if (_numberOfAttempts == 1)
             {
+                _shotDownLastTimeSkittles = _allSkittles.Length - _countRemainingSkittles;
                 // Если в прошлый раз был Страйк или Спэр
                 if (_isStrike || _isSpare)
                 {
@@ -115,65 +147,35 @@ public class ExtinctionZoneGame : MonoBehaviour
             // Спэр
             if (_numberOfAttempts == 2)
             {
+                _shotDownLastTimeSkittles = _allSkittles.Length - (_shotDownLastTimeSkittles + _countRemainingSkittles);
                 // Если в прошлый раз был Страйк
                 if (_isStrike)
                 {
-                    _scoreSkittles.ScoreValue += _countSkittles;
-                    Debug.LogWarning($"Добавленно {_countSkittles} бонусных очков!");
+                    _isStrike = false;
+                    _scoreSkittles.ScoreValue += _shotDownLastTimeSkittles;
+                    Debug.LogWarning($"Добавленно {_shotDownLastTimeSkittles} бонусных очков!");
                 }
 
                 _isSpare = true;
                 SpareEvent?.Invoke();
                 print($"Спэр!");
             }
-
-            _numberOfAttempts = 0;
             RespawnSkittles();
-            _scoreSkittles.NextRound();
-        }
-        // Кегли еще остались
-        else
-        {
-            // Первый бросок
-            if ( _numberOfAttempts == 1)
-            {
-                if (_isStrike || _isSpare)
-                {
-                    _isSpare = false;
-                    _countSkittles = _countRemainingSkittles;
-                    _scoreSkittles.ScoreValue += _allSkittles.Length - _countSkittles;
-                    //print($"Начислены доплнительные балы за прошлый бросок!");
-                    Debug.LogWarning($"Добавленно {_allSkittles.Length - _countSkittles} бонусных очков!");
-                }
-            }
-            // Второй бросок
-            if (_numberOfAttempts >= 2)
-            {
-                if(_isStrike) 
-                {
-                    _isStrike = false;
-                    _scoreSkittles.ScoreValue += _countSkittles;
-                    //print($"Начислены доплнительные балы за прошлый Страйк!");
-                    Debug.LogWarning($"Добавленно {_countSkittles} бонусных очков!");
-                }
-
-                _numberOfAttempts = 0;
-                RespawnSkittles();
-                _scoreSkittles.NextRound();
-            }
         }
     }
 
     private IEnumerator ProcessReloade()
     {
         yield return new WaitForSeconds(1.8f);
-        OnCollisionExitEarly?.Invoke();
+        _colliderBall.gameObject.SetActive(false);
+        ReloadeEarlyEvent?.Invoke();
 
         yield return new WaitForSeconds(1.2f);
-        _collider.gameObject.transform.position = _startPosition;
-        _collider.gameObject.SetActive(true);
+        _colliderBall.gameObject.transform.position = _startPosition;
+        _colliderBall.gameObject.SetActive(true);
+        ResetPhysicMoveToObject(_colliderBall.gameObject);
         ThrowResultInSkittles();
-        OnCollisionExit?.Invoke();
+        ReloadeEvent?.Invoke();
     }
 
     private bool IsStandingQuaternionSkittle(Skittle skittle)
@@ -196,12 +198,15 @@ public class ExtinctionZoneGame : MonoBehaviour
 
     private void RespawnSkittles()
     {
+        _numberOfAttempts = 0;
         foreach (var skittle in _allSkittles)
         {
+            skittle.SkittleOut = false;
             skittle.gameObject.SetActive(true);
             SetInitialPropertySkittle(skittle);
         }
-        print("Респавн");
+        _scoreSkittles.NextRound();
+        Debug.Log("Респавн - следующий этап включен");
     }
 
     private void SetInitialPropertySkittle(Skittle skittle)
@@ -214,5 +219,13 @@ public class ExtinctionZoneGame : MonoBehaviour
         // Задаем изначальную позицию
         skittle.transform.rotation = _allSkittlesStartRotation[skittle];
         skittle.transform.position = _allSkittlesStartPosition[skittle];
+    }
+
+    private void ResetPhysicMoveToObject(GameObject gObject)
+    {
+        // Останавливаем физику
+        Rigidbody rb = gObject.GetComponent<Rigidbody>();
+        rb.angularVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 }

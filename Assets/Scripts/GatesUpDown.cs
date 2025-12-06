@@ -4,7 +4,7 @@ using UnityEngine;
 public class GatesUpDown : MonoBehaviour
 {
 
-    [SerializeField] private ExtinctionZoneGame _extinctionZoneGame;
+    [SerializeField] private ExtinctionZoneGameAndBowlingGameLogic _extinctionZoneGame;
     [SerializeField] private AnimationClip _clipUp;
     [SerializeField] private AnimationClip _clipDown;
     [SerializeField] private AudioClip[] _audioClips;
@@ -23,7 +23,7 @@ public class GatesUpDown : MonoBehaviour
     private void OnEnable()
     {
         _extinctionZoneGame.OnCollisionEnter += _extinctionZoneGame_OnCollisionEnter;
-        _extinctionZoneGame.OnCollisionExit += _extinctionZoneGame_OnCollisionEnter;
+        _extinctionZoneGame.ReloadeEvent += _extinctionZoneGame_OnCollisionEnter;
         UpDown();
     }
 
@@ -54,6 +54,6 @@ public class GatesUpDown : MonoBehaviour
     private void OnDisable()
     {
         _extinctionZoneGame.OnCollisionEnter -= _extinctionZoneGame_OnCollisionEnter;
-        _extinctionZoneGame.OnCollisionExit -= _extinctionZoneGame_OnCollisionEnter;
+        _extinctionZoneGame.ReloadeEvent -= _extinctionZoneGame_OnCollisionEnter;
     }
 }

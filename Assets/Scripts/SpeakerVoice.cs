@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SpeakerVoice : MonoBehaviour
 {
-    [SerializeField] private ExtinctionZoneGame _zoneGame;
+    [SerializeField] private ExtinctionZoneGameAndBowlingGameLogic _zoneGame;
     [SerializeField] private AudioClip[] _audioClips;
 
     private AudioSource _audioSource;
