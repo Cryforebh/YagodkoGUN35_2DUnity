@@ -23,6 +23,7 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
     private int _countRemainingSkittles = 0;
     private int _shotDownLastTimeSkittles;
     private Skittle _currentSkittle;
+    private bool _isExtinctionEnterBall = false;
 
 
     public event Action OnCollisionEnter;
@@ -78,9 +79,17 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
 
         if (other.gameObject.tag == "Ball")
         {
-            _colliderBall = other;
-            StartCoroutine(ProcessReloade());
-            OnCollisionEnter?.Invoke();
+            if (_isExtinctionEnterBall) 
+            {
+                other.gameObject.transform.position = _startPosition;
+            }
+            else
+            {
+                _isExtinctionEnterBall = true;
+                _colliderBall = other;
+                StartCoroutine(ProcessReloade());
+                OnCollisionEnter?.Invoke();
+            }
         }
         if (other.gameObject.tag == "Skittle")
         {
@@ -172,7 +181,7 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
 
     private IEnumerator ProcessReloade()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.5f);
         _colliderBall.gameObject.SetActive(false);
         ReloadeEarlyEvent?.Invoke();
 
@@ -181,6 +190,7 @@ public class ExtinctionZoneGameAndBowlingGameLogic : MonoBehaviour
         _colliderBall.gameObject.SetActive(true);
         ResetPhysicMoveToObject(_colliderBall.gameObject);
         ThrowResultInSkittles();
+        _isExtinctionEnterBall = false;
         ReloadeEvent?.Invoke();
     }
 
