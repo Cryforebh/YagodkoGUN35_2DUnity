@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.UI.Button;
 
 public class PlayerInteractObject : MonoBehaviour
 {
@@ -44,9 +42,6 @@ public class PlayerInteractObject : MonoBehaviour
         _playerInput.PlayerActive.MouseLeftButton.performed += MouseLeft_performed;
         _playerInput.PlayerActive.MouseLeftButton.canceled += MouseLeft_canceled;
         _playerInput.PlayerActive.MouseScroll.started += MouseScroll_started;
-
-        StartCoroutine(ProcessRaycastObject());
-        StartCoroutine(ProcessAttractionObject());
     }
 
     private void MouseRightButton_started(UnityEngine.InputSystem.InputAction.CallbackContext obj) => ToThrow();
@@ -105,80 +100,82 @@ public class PlayerInteractObject : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessAttractionObject()
+    private void LateUpdate()
     {
-        while (true)
+        ProcessRaycastObjectInteraction();
+    }
+
+    private void FixedUpdate()
+    {
+        ProcessAttractionObjectToPointInteraction();
+    }
+
+    private void ProcessAttractionObjectToPointInteraction()
+    {
+        if (_isObjectGrabbed && !_isButton)
         {
-            if (_isObjectGrabbed && !_isButton)
+
+            if (_isCenterActioanInCenterCamera)
             {
-
-                if (_isCenterActioanInCenterCamera)
-                {
-                    _pointEndAction = _camera.transform.position + _camera.transform.forward * _distanceToObject;
-                }
-                else
-                {
-                    _pointEndAction = (transform.position + Vector3.up * _addHeightCenterActioan) + _camera.transform.forward * _distanceToObject;
-                }
-
-                _targetRigidbody.velocity = (_pointEndAction - _targetObject.transform.position) * _attractionSpeed * Time.deltaTime;
-                _targetRigidbody.angularVelocity = Vector3.zero;
-
-                Debug.DrawLine(_camera.transform.position, _pointEndAction, Color.green);
+                _pointEndAction = _camera.transform.position + _camera.transform.forward * _distanceToObject;
             }
-            yield return null;
+            else
+            {
+                _pointEndAction = (transform.position + Vector3.up * _addHeightCenterActioan) + _camera.transform.forward * _distanceToObject;
+            }
+
+            _targetRigidbody.velocity = (_pointEndAction - _targetObject.transform.position) * _attractionSpeed * Time.fixedDeltaTime;
+            _targetRigidbody.angularVelocity = Vector3.zero;
+
+            Debug.DrawLine(_camera.transform.position, _pointEndAction, Color.green);
         }
     }
 
-    private IEnumerator ProcessRaycastObject()
+    private void ProcessRaycastObjectInteraction()
     {
-        while (true)
+        if (!_isObjectGrabbed)
         {
-            if (!_isObjectGrabbed)
+            Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = _camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-                RaycastHit hit;
+                var hitTarget = hit.collider.gameObject;
 
-                if (Physics.Raycast(ray, out hit))
+                if (hitTarget.tag == "Ball")
                 {
-                    var hitTarget = hit.collider.gameObject;
+                    _targetObject = hitTarget;
+                    var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
 
-                    if (hitTarget.tag == "Ball")
+                    if (distanceToObject <= _distanceMaxActive)
                     {
-                        _targetObject = hitTarget;
-                        var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
-
-                        if (distanceToObject <= _distanceMaxActive)
-                        {
-                            _isButton = false;
-                            _isObjectInCenterCursor = true;
-                            _tMPText.enabled = true;
-                        }
-                        else
-                        {
-                            _isObjectInCenterCursor = false;
-                            _tMPText.enabled = false;
-                        }
+                        _isButton = false;
+                        _isObjectInCenterCursor = true;
+                        _tMPText.enabled = true;
                     }
-                    if (hitTarget.tag == "Button")
+                    else
                     {
-                        _targetObject = hitTarget;
-                        var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
+                        _isObjectInCenterCursor = false;
+                        _tMPText.enabled = false;
+                    }
+                }
+                if (hitTarget.tag == "Button")
+                {
+                    _targetObject = hitTarget;
+                    var distanceToObject = Vector3.Distance(transform.position, _targetObject.transform.position);
 
-                        if (distanceToObject <= _distanceMaxActive)
-                        {
-                            _isObjectInCenterCursor = false;
-                            _tMPText.enabled = false;
-                            _isButton = true;
-                        }
-                        else
-                        {
-                            _isButton = false;
-                        }
+                    if (distanceToObject <= _distanceMaxActive)
+                    {
+                        _isObjectInCenterCursor = false;
+                        _tMPText.enabled = false;
+                        _isButton = true;
+                    }
+                    else
+                    {
+                        _isButton = false;
                     }
                 }
             }
-            yield return null;
         }
     }
 
