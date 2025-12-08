@@ -159,6 +159,11 @@ public class PlayerInteractObject : MonoBehaviour
                         _tMPText.enabled = false;
                     }
                 }
+                else
+                {
+                    _isObjectInCenterCursor = false;
+                    _tMPText.enabled = false;
+                }
                 if (hitTarget.tag == "Button")
                 {
                     _targetObject = hitTarget;
