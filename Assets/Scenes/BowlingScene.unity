@@ -1633,11 +1633,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 160100557}
-  _horizontalTurnSensitivity: 50
-  _verticalTurnSensitivity: 50
+  _horizontalTurnSensitivity: 4.1
+  _verticalTurnSensitivity: 4.1
   _verticalMinAngle: -60
   _verticalMaxAngle: 80
-  moveSpeed: 30
+  _moveSpeed: 5
 --- !u!114 &322658237
 MonoBehaviour:
   m_ObjectHideFlags: 0

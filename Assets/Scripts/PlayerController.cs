@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Настройки камеры:")]
@@ -10,20 +10,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _verticalMinAngle = -60f;    // Минимальный угол по вертикали
     [SerializeField] private float _verticalMaxAngle = 60f;     // Максимальный угол по вертикали
     [Header("Настройки движения персонажа:")]
-    [SerializeField] private float moveSpeed = 5f; // Скорость движения персонажа
+    [SerializeField] private float _moveSpeed = 5f; // Скорость движения персонажа
 
-    private float _mouseInputX = 0f;
-    private float _mouseInputY = 0f;
-    private float _moveInputX = 0f;
-    private float _moveInputZ = 0f;
     private Rigidbody _rigidbody;
     private InputControl _playerInput;
-    private Vector3 _moveDirection;
+
+    private Vector2 _mouseInput = Vector2.zero;
+    private Vector3 _moveInput = Vector2.zero;
 
     private float _rotationY = 0f;   // Текущий угол по вертикали
 
     private void Awake()
     {
+        if (!_camera) Debug.LogWarning("Not camera!");
+
         _playerInput = new InputControl();
         _rigidbody = GetComponent<Rigidbody>();
 
@@ -31,64 +31,44 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
     }
 
+    private void OnEnable() => _playerInput.Enable();
+
     private void Start()
     {
         _playerInput.PlayerMove.WASD.performed += Move_performed;
         _playerInput.CameraControls.MouseDelta.performed += Camera_performed;
-
-        StartCoroutine(ProcessCheckDirectionAndMove());
     }
 
-    private void Camera_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Camera_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        _mouseInput += obj.ReadValue<Vector2>();
+
+    private void Move_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj) =>
+        _moveInput = new Vector3(obj.ReadValue<Vector3>().x, 0, obj.ReadValue<Vector3>().z);
+
+    private void FixedUpdate() => ProcessMovement();
+
+    private void Update() => ProcessCameraRotation();
+
+    private void ProcessMovement()
     {
-        TurnCamera(obj.ReadValue<Vector2>() * Time.deltaTime);
+        Vector3 moveDirection = new Vector3(_moveInput.x, 0, _moveInput.z);
+        moveDirection = transform.TransformDirection(moveDirection);
+        moveDirection.Normalize();
+
+        Vector3 targetPosition = _rigidbody.position + moveDirection * _moveSpeed * Time.fixedDeltaTime;
+        _rigidbody.MovePosition(targetPosition);
     }
 
-    private void Move_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void ProcessCameraRotation()
     {
-        MoveCharacter(obj.ReadValue<Vector3>());
-    }
+        float rotationX = _mouseInput.x * _horizontalTurnSensitivity * Time.deltaTime;
+        transform.Rotate(0,rotationX,0);
 
-    private void TurnCamera(Vector2 mouseInput)
-    {
-        _mouseInputX = mouseInput.x * 0.1f;
-        _mouseInputY = mouseInput.y * 0.1f;
-    }
+        _rotationY -= _mouseInput.y * _verticalTurnSensitivity * Time.deltaTime;
+        _rotationY = Mathf.Clamp(_rotationY, _verticalMinAngle, _verticalMaxAngle);
 
-    private void MoveCharacter(Vector3 moveInput)
-    {
-        _moveInputX = moveInput.x * 0.1f;
-        _moveInputZ = moveInput.z * 0.1f;
-    }
-
-    private IEnumerator ProcessCheckDirectionAndMove()
-    {
-        while (true)
-        {
-            //// Определяем направление движения относительно камеры
-            _moveDirection = new Vector3(_moveInputX, 0, _moveInputZ);
-            _moveDirection = transform.TransformDirection(_moveDirection);
-
-            // Камера            
-            _rotationY -= _mouseInputY * _verticalTurnSensitivity /** Time.deltaTime*/;
-            _rotationY = Mathf.Clamp(_rotationY, _verticalMinAngle, _verticalMaxAngle);
-
-            transform.Rotate(0, _mouseInputX * _horizontalTurnSensitivity /** Time.deltaTime*/, 0);
-
-            Vector3 eulerAngles = transform.eulerAngles;
-            eulerAngles.x = _rotationY;
-            _camera.transform.eulerAngles = eulerAngles;
-
-            // Применяем движение к персонажу
-            _rigidbody.velocity = (_moveDirection * moveSpeed);
-
-            yield return null;
-        }
-    }
-
-    private void OnEnable()
-    {
-        _playerInput.Enable();
+        _camera.transform.localEulerAngles = new Vector3(_rotationY,0,0);
+        _mouseInput = Vector2.zero;
     }
 
     private void OnDisable()
@@ -97,4 +77,5 @@ public class PlayerController : MonoBehaviour
         _playerInput.PlayerMove.WASD.performed -= Move_performed;
         _playerInput.CameraControls.MouseDelta.performed -= Camera_performed;
     }
+    private void OnDestroy() => OnDisable();
 }
