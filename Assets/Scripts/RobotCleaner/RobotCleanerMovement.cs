@@ -14,12 +14,13 @@ public class RobotCleanerMovement : MonoBehaviour
 
     private bool m_isWaitNextJob = false;
     private bool m_isRotate = false;
-
+    private WaitForSeconds m_timeWait;
     private void Awake()
     {
         m_agentNM = GetComponent<NavMeshAgent>();
         m_scannerTrasher = GetComponent<RobotScannerTrashRaycast>();
         m_scannerTrasherOverlapSphere = GetComponent<RobotScannerTrashPhisicOverlapSphere>();
+        m_timeWait = new WaitForSeconds(1f);
     }
 
     private void FixedUpdate()
@@ -65,7 +66,7 @@ public class RobotCleanerMovement : MonoBehaviour
     private IEnumerator TimeStopDelay()
     {
         m_isWaitNextJob = true;
-        yield return new WaitForSeconds(1.0f);
+        yield return m_timeWait;
         m_isWaitNextJob = false;
     }
 }
