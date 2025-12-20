@@ -60,7 +60,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: WindowLeft Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5355814333185659192, guid: ad7c5d3ecc22b2d4a9dac8082eb7bf95, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
