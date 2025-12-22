@@ -8,7 +8,7 @@ public class HomelessStateCollect : HomelessStateBase
     public override void EnterState(Homeless homeless)
     {
         Debug.Log("О, манетка!");
-        m_timeCollect = 0.1f;
+        m_timeCollect = 0.2f;
         m_isCollected = false;
     }
 
