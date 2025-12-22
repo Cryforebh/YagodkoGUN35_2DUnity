@@ -8,20 +8,15 @@ public class SearchForTargets : MonoBehaviour
     [SerializeField] private VoiceContainer m_voiceContainer;
 
     private float m_maxDistance = 300f;
-    private List<BotClient> m_botClients = new List<BotClient>();
-    private BotClient m_botTarget;
+    private List<Client> m_botClients = new List<Client>();
+    private Client m_botTarget;
     private bool m_isFindingClientEnd = false;
     private bool m_isDeliveryManNearWithClient = false;
     private bool m_isCompliteDelivery = false;
 
     private void Awake()
     {
-        var clients = GetComponentsInChildren<BotClient>();
-
-        foreach (var client in clients)
-        {
-            m_botClients.Add(client);
-        }
+        AddAllClientsToContainer();
     }
 
     private void Start()
@@ -31,10 +26,20 @@ public class SearchForTargets : MonoBehaviour
         m_deliveryMan.StartTransferEvent += StartTransferProcess;
     }
 
+    private void AddAllClientsToContainer()
+    {
+        var clients = GetComponentsInChildren<Client>();
+
+        foreach (var client in clients)
+        {
+            m_botClients.Add(client);
+        }
+    }
+
     private void StartTransferProcess()
     {
         if (m_voiceContainer)
-        m_voiceContainer.VoiceDeliveryManPlay(m_deliveryMan);
+            m_voiceContainer.VoiceDeliveryManPlay(m_deliveryMan);
     }
 
     private void Update()
@@ -60,7 +65,7 @@ public class SearchForTargets : MonoBehaviour
 
         float distanceNearest = m_maxDistance;
 
-        foreach (BotClient client in m_botClients)
+        foreach (Client client in m_botClients)
         {
             if (client.IsClient)
             {
@@ -79,14 +84,14 @@ public class SearchForTargets : MonoBehaviour
         m_isFindingClientEnd = true;
     }
 
-    private void RunToClient(DeliveryMan deliveryMan, BotClient client)
+    private void RunToClient(DeliveryMan deliveryMan, Client client)
     {
         if (m_isCompliteDelivery) return;
         if (m_isDeliveryManNearWithClient) return;
 
         if (m_isFindingClientEnd && m_botTarget)
         {
-            var velocity = deliveryMan.MeshAgent.velocity.magnitude;
+            var velocity = deliveryMan.AIAgent.velocity.magnitude;
 
             if (m_distanceInteractionWithClient <= GetDistance(deliveryMan.transform, client.transform))
             {
@@ -97,7 +102,7 @@ public class SearchForTargets : MonoBehaviour
                 m_isDeliveryManNearWithClient = true;
                 client.IsClient = false;
                 m_isFindingClientEnd = false;
-                deliveryMan.ProcessOfTransferringProducts(m_isDeliveryManNearWithClient);
+                deliveryMan.ProcessOfTransferringProducts(m_isDeliveryManNearWithClient,client);
             }
         }
     }

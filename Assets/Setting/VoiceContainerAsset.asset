@@ -23,3 +23,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2e525577cedf31547a969036564bc3d7, type: 3}
   - {fileID: 8300000, guid: f9c7947e3ad8e9741ba2065546d4a1e9, type: 3}
   - {fileID: 8300000, guid: be6546386d57ea64cab3cb06f3cc5f6b, type: 3}
+  m_audioHomeless:
+  - {fileID: 8300000, guid: 07d36842fef72764eb398a55010c9c6b, type: 3}
+  - {fileID: 8300000, guid: dffa958ad36dab744845bdaaba5565de, type: 3}
+  - {fileID: 8300000, guid: f06b3db3ff09fdc49a2a98f489616750, type: 3}
+  - {fileID: 8300000, guid: ed7877c52a8cf6d4bb43f72d7be88237, type: 3}
+  - {fileID: 8300000, guid: 4427275a4a14a7442b859b350b3959d6, type: 3}
+  - {fileID: 8300000, guid: 3688ffa57a04e664ab26823c57840813, type: 3}
+  - {fileID: 8300000, guid: 73ac3bbee7b1ee54f9df87cd28e0681e, type: 3}
