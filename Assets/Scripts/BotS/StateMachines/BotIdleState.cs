@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class BotIdleState : BotStateBase
 {
-    private Client m_clientCatch;
+    private float m_idleTime = 2f;
+    private float m_idleTimeExitAnimation = 0.5f;
+    private float m_currentIdleTime = 0;
 
     public override void EnterState(BotBase bot)
     {
-        if (bot is Client client)
-        {
-            m_clientCatch = client;
-        }
-        else
-        {
-            m_clientCatch = null;
-        }
+        m_currentIdleTime = 0;
+        bot.AIAnimator.SetBool("Thinks", true);
     }
 
     public override void UpdateState(BotBase bot)
     {
-        if (m_clientCatch != null)
+        bot.AIAnimator.SetFloat("Movement", bot.AIAgent.velocity.magnitude);
+        m_currentIdleTime += Time.deltaTime;
+
+        if (m_currentIdleTime >= m_idleTimeExitAnimation)
         {
-            if (m_clientCatch.IsToTransfering)
-            {
-                m_clientCatch.IsToTransfering = false;
-                m_clientCatch.SwitchState(m_clientCatch.IdlePickUpState);
-            }
+            bot.AIAnimator.SetBool("Thinks", false);
+        }
+
+        if (m_currentIdleTime >= m_idleTime)
+        {
+            bot.SwitchState(bot.WalkState);
         }
     }
 }

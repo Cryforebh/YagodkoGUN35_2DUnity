@@ -3,8 +3,6 @@ using UnityEngine.AI;
 
 public class Passerby : BotBase
 {
-    private bool m_isMovingToDestination = false;
-
     private void Awake()
     {
         AIAnimator = GetComponent<Animator>();
@@ -14,32 +12,14 @@ public class Passerby : BotBase
 
     private void Start()
     {
+        AIStateOfDanger = StateOfDanger.Peaceful;
         AIAgent.speed = Random.Range(2f, 2.3f);
-    }
-
-    public void UpdateDestination()
-    {
-        if (AllPathWalkContainer == null)
-        {
-            print("Контейнер не инициализирован!");
-            AllPathWalkContainer = FindObjectOfType<PathWalkContainer>();
-        }
-        AIAgent.destination = AllPathWalkContainer.GetScanneNextPatch(transform);
-        m_isMovingToDestination = true;
+        AIBotState = WalkState;
+        AIBotState.EnterState(this);
     }
 
     private void Update()
     {
-        AIAnimator.SetFloat("Movement", AIAgent.velocity.magnitude);
-
-        if (m_isMovingToDestination)
-        {
-            var distance = Vector3.Distance(transform.position, AIAgent.destination);
-            if (distance <= AIAgent.stoppingDistance + 1f)
-            {
-                m_isMovingToDestination = false;
-                UpdateDestination();
-            }
-        }
+        AIBotState.UpdateState(this);
     }
 }

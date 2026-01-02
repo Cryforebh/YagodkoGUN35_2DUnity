@@ -2,41 +2,23 @@ using UnityEngine;
 
 public class BotPickUpState : BotStateBase
 {
-    private float m_time;
-    private Client m_client;
+    private float m_pickUpTime = 0.5f;
+    private float m_currentPickUpTime = 0;
 
     public override void EnterState(BotBase bot)
     {
-        if (bot is Client clietn)
-        {
-            m_client = clietn;
-        }
-        else
-        {
-            m_client = null;
-        }
-
         Debug.Log("Это мы заберем!");
         bot.AIAnimator.SetBool("Collected", true);
-        m_time = 0.5f;
+        m_currentPickUpTime = m_pickUpTime;
     }
 
     public override void UpdateState(BotBase bot)
     {
-        m_time -= Time.deltaTime;
-        if (m_time <= 0)
+        m_currentPickUpTime += Time.time;
+        if (m_currentPickUpTime >= m_pickUpTime)
         {
             bot.AIAnimator.SetBool("Collected", false);
-
-            if (m_client != null)
-            {
-                m_client.IsCanWalk = true;
-                m_client.SwitchState(m_client.WalkState);
-            }
-            else
-            {
-                bot.SwitchState(bot.IdleState);
-            }
+            bot.SwitchState(bot.IdleState);
         }
     }
 }

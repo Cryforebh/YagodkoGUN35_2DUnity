@@ -2,33 +2,29 @@ using UnityEngine;
 
 public class BotWalkState : BotStateBase
 {
-    private bool m_isCanWalk;
-
     public override void EnterState(BotBase bot)
     {
-        m_isCanWalk = false;
-        if (bot.IsCanWalk)
-        {
-            m_isCanWalk = true;
-        }
+        bot.AllPathWalkContainer.UpdateDestination(bot.AIAgent);
     }
 
     public override void UpdateState(BotBase bot)
     {
-        if (m_isCanWalk)
-        {
-            Moving(bot);
-        }
+        Moving(bot);
     }
 
     private void Moving(BotBase bot)
     {
         bot.AIAnimator.SetFloat("Movement", bot.AIAgent.velocity.magnitude);
+        
+        if (bot.AIStateOfDanger == BotBase.StateOfDanger.Hostile)
+        {
+            bot.AIAgent.speed = 5f;
+        }
 
         var distance = Vector3.Distance(bot.transform.position, bot.AIAgent.destination);
-        if (distance <= bot.AIAgent.stoppingDistance + 1f)
+        if (distance <= bot.AIAgent.stoppingDistance)
         {
-            bot.AllPathWalkContainer.UpdateDestination(bot.AIAgent);
+            bot.SwitchState(bot.IdleState);
         }
     }
 }
