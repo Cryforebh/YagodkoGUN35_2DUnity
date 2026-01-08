@@ -8,8 +8,5 @@ public class SpawnerControlBotWalkingInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.BindInstance(spawnerControlBotWalking).AsSingle().NonLazy();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 }

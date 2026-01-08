@@ -1,8 +1,14 @@
-using UnityEngine;
-
-public abstract class BotStateBase 
+public enum IDState
 {
-    public abstract void EnterState(BotBase bot);
+    IdleState,
+    WalkState,
+    PickUpState
+}
 
+public abstract class BotStateBase
+{
+    public abstract IDState GetIDState();
+    public abstract void EnterState(BotBase bot);
     public abstract void UpdateState(BotBase bot);
+    public abstract void ExitState(BotBase bot);
 }

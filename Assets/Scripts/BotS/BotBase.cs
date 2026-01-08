@@ -1,33 +1,40 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
-using static BotBase;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(AudioSource),typeof(Animator))]
+[RequireComponent(typeof(NavMeshAgent), typeof(AudioSource), typeof(Animator))]
 public abstract class BotBase : MonoBehaviour
 {
-    private NavMeshAgent m_navMeshAgent;
-    private AudioSource m_audioSource;
-    private Animator m_characterAnimator;
-    private StateOfDanger m_stateOfDanger;
-    private BotStateBase m_currentState;
     private PathWalkContainer m_pathContainer;
-    public BotIdleState IdleState = new();
-    public BotWalkState WalkState = new();
-    private bool m_isCanWalk = true;
+    [HideInInspector] public NavMeshAgent AIAgent;
+    [HideInInspector] public AudioSource AIAudioSource;
+    [HideInInspector] public Animator AIAnimator;
+    [HideInInspector] public StateOfDanger AIStateOfDanger;
+    [HideInInspector] public BotStateBase AICurrentState;
+    public Dictionary<IDState, BotStateBase> AllState = new Dictionary<IDState, BotStateBase>();
 
-    public NavMeshAgent AIAgent { get => m_navMeshAgent; set => m_navMeshAgent = value; }
-    public AudioSource AIAudioSource { get => m_audioSource; set => m_audioSource = value; }
-    public Animator AIAnimator { get => m_characterAnimator; set => m_characterAnimator = value; }
-    public PathWalkContainer AllPathWalkContainer { get => m_pathContainer; set => m_pathContainer = value; }
-    public StateOfDanger AIStateOfDanger { get => m_stateOfDanger; set => m_stateOfDanger = value; }
-    public BotStateBase AIBotState { get => m_currentState; set => m_currentState = value; }
-    public bool IsCanWalk { get => m_isCanWalk; set => m_isCanWalk = value; }
+    public PathWalkContainer AllPathWalkContainer => m_pathContainer;
 
-    public void SwitchState(BotStateBase state)
+    public void RegisterState(BotStateBase state)
     {
-        m_currentState = state;
-        m_currentState.EnterState(this);
+        AllState.Add(state.GetIDState(), state);
+    }
+
+    public void SwitchState(IDState nextState)
+    {
+        if (AllState.ContainsKey(nextState))
+        {
+            BotStateBase state = AllState[nextState];
+            if (AICurrentState != state)
+            {
+                AICurrentState?.ExitState(this);
+                AICurrentState = state;
+                AICurrentState?.EnterState(this);
+            }
+        }
+        else
+            Debug.LogError("Не зарегестрированное Состояние!");
     }
 
     [Inject]
@@ -44,6 +51,6 @@ public abstract class BotBase : MonoBehaviour
 
     public void SetStateOfDanger(StateOfDanger stateOfDanger)
     {
-        m_stateOfDanger = stateOfDanger;
+        AIStateOfDanger = stateOfDanger;
     }
 }

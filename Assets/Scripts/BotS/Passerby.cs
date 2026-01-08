@@ -3,23 +3,24 @@ using UnityEngine.AI;
 
 public class Passerby : BotBase
 {
-    private void Awake()
+    [SerializeField] private IDState m_startState;
+
+    private void Start()
     {
         AIAnimator = GetComponent<Animator>();
         AIAgent = GetComponent<NavMeshAgent>();
         AIAudioSource = GetComponent<AudioSource>();
-    }
 
-    private void Start()
-    {
         AIStateOfDanger = StateOfDanger.Peaceful;
-        AIAgent.speed = Random.Range(2f, 2.3f);
-        AIBotState = WalkState;
-        AIBotState.EnterState(this);
+        AIAgent.speed = 1.4f; /*Random.Range(1.1f, 1.7f);*/
+
+        RegisterState(new BotIdleState());
+        RegisterState(new BotWalkState());
+        SwitchState(m_startState);
     }
 
     private void Update()
     {
-        AIBotState.UpdateState(this);
+        AICurrentState?.UpdateState(this);
     }
 }

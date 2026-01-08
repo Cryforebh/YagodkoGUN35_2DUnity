@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class BotIdleState : BotStateBase
 {
-    private float m_idleTime = 2f;
-    private float m_idleTimeExitAnimation = 0.5f;
+    private readonly float m_idleTime = 2f;
+    private readonly float m_idleTimeExitAnimation = 0.5f;
     private float m_currentIdleTime = 0;
+
+    public override IDState GetIDState() => IDState.IdleState;
 
     public override void EnterState(BotBase bot)
     {
@@ -24,7 +26,11 @@ public class BotIdleState : BotStateBase
 
         if (m_currentIdleTime >= m_idleTime)
         {
-            bot.SwitchState(bot.WalkState);
+            bot.SwitchState(IDState.WalkState);
         }
+    }
+
+    public override void ExitState(BotBase bot)
+    {
     }
 }

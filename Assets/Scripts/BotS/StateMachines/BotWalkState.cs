@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BotWalkState : BotStateBase
 {
+    public override IDState GetIDState() => IDState.WalkState;
+
     public override void EnterState(BotBase bot)
     {
         bot.AllPathWalkContainer.UpdateDestination(bot.AIAgent);
@@ -10,6 +12,11 @@ public class BotWalkState : BotStateBase
     public override void UpdateState(BotBase bot)
     {
         Moving(bot);
+    }
+
+    public override void ExitState(BotBase bot)
+    {
+        
     }
 
     private void Moving(BotBase bot)
@@ -24,7 +31,7 @@ public class BotWalkState : BotStateBase
         var distance = Vector3.Distance(bot.transform.position, bot.AIAgent.destination);
         if (distance <= bot.AIAgent.stoppingDistance)
         {
-            bot.SwitchState(bot.IdleState);
+            bot.SwitchState(IDState.IdleState);
         }
     }
 }

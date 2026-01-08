@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class BotPickUpState : BotStateBase
 {
-    private float m_pickUpTime = 0.5f;
+    private readonly float m_pickUpTime = 0.5f;
     private float m_currentPickUpTime = 0;
+
+    public override IDState GetIDState() => IDState.PickUpState;
 
     public override void EnterState(BotBase bot)
     {
@@ -18,7 +20,11 @@ public class BotPickUpState : BotStateBase
         if (m_currentPickUpTime >= m_pickUpTime)
         {
             bot.AIAnimator.SetBool("Collected", false);
-            bot.SwitchState(bot.IdleState);
+            bot.SwitchState(IDState.IdleState);
         }
+    }
+
+    public override void ExitState(BotBase bot)
+    {
     }
 }
