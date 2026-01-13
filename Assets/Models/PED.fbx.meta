@@ -19,12 +19,69 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Armature|Armature.001|Armature|Jump' has import
+      animation warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'RightLegBones' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Armature.001|Armature|Jump_start' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'RightLegBones' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\t'LeftLegBones' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Armature.001|Armature|Run' has import animation warnings that might
+      lower retargeting quality:\nNote: Activate translation DOF on avatar to improve
+      retargeting quality.\n\t'RightLegBones' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\nClip 'Armature|Armature.001|Armature|Walking'
+      has import animation warnings that might lower retargeting quality:\nNote:
+      Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|FastWalking' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Ilde' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Ilde.001' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Jump' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Jump_end' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Jump_Midel' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Jump_start' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|RunWalking' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Thinks' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'Armature|Walking' has import animation warnings that might lower retargeting
+      quality:\nNote: Activate translation DOF on avatar to improve retargeting quality.\n\t'RightLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\t'LeftLegBones'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -33,11 +90,69 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
+      name: Armature|FastWalking
+      takeName: Armature|FastWalking
+      internalID: -6966890094769703808
+      firstFrame: 0
+      lastFrame: 28
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Armature|Ilde
       takeName: Armature|Ilde
       internalID: -1037594808544227598
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Jump_end
+      takeName: Armature|Jump_end
+      internalID: 5306122586928847834
+      firstFrame: 0
+      lastFrame: 14
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -62,9 +177,38 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature|Run
-      takeName: Armature|Run
-      internalID: -7551964380084998518
+      name: Armature|Jump_Midel
+      takeName: Armature|Jump_Midel
+      internalID: -400842252378298813
+      firstFrame: 0
+      lastFrame: 100
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Jump_start
+      takeName: Armature|Jump_start
+      internalID: -2846035327764480170
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -95,7 +239,7 @@ ModelImporter:
       takeName: Armature|Thinks
       internalID: 8025690906014544026
       firstFrame: 0
-      lastFrame: 80
+      lastFrame: 79
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -124,14 +268,14 @@ ModelImporter:
       takeName: Armature|Walking
       internalID: -4274770991410265338
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -197,8 +341,266 @@ ModelImporter:
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
-    human: []
-    skeleton: []
+    human:
+    - boneName: SpineDown
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftThigh
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightThigh
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftShin
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightShin
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: SpineUp
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftForearm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightForearm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: LeftPalm
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RightPalm
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: PED(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature
+      parentName: PED(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071069, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: SpineDown
+      parentName: Armature
+      position: {x: -0, y: -1.4210854e-16, z: 0.00996815}
+      rotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftLegBones
+      parentName: SpineDown
+      position: {x: -0.00024534302, y: -0.00020270824, z: -1.3180228e-10}
+      rotation: {x: -0.02350892, y: -0.07032903, z: 0.96643144, w: 0.24599096}
+      scale: {x: 1.0000008, y: 1.0000007, z: 0.99999976}
+    - name: LeftThigh
+      parentName: LeftLegBones
+      position: {x: 2.401066e-10, y: 0.0014434577, z: -4.1909514e-11}
+      rotation: {x: 0.11771738, y: 0.011949615, z: 0.22806221, w: 0.96643025}
+      scale: {x: 1, y: 1.0000002, z: 1}
+    - name: LeftShin
+      parentName: LeftThigh
+      position: {x: -1.9790605e-11, y: 0.00420631, z: 4.1909514e-11}
+      rotation: {x: -0.09660721, y: -0.0005901437, z: 0.009639668, w: 0.99527574}
+      scale: {x: 0.9999999, y: 1.0000001, z: 0.99999976}
+    - name: LeftFoot
+      parentName: LeftShin
+      position: {x: -8.221832e-11, y: 0.0032184809, z: -1.16415315e-11}
+      rotation: {x: 0.0362395, y: -0.72848374, z: -0.023824248, w: 0.683689}
+      scale: {x: 1.0000005, y: 1.0000012, z: 1.0000006}
+    - name: LeftFoot_end
+      parentName: LeftFoot
+      position: {x: -0, y: 0.0009274633, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightLegBones
+      parentName: SpineDown
+      position: {x: 0.00024534302, y: -0.00020270824, z: -1.3180228e-10}
+      rotation: {x: 0.023508906, y: -0.07032907, z: 0.9664314, w: -0.24599105}
+      scale: {x: 1.0000004, y: 1.0000002, z: 0.9999997}
+    - name: RightThigh
+      parentName: RightLegBones
+      position: {x: 2.0780135e-10, y: 0.0014434584, z: -2.3283063e-11}
+      rotation: {x: 0.117717415, y: -0.011949639, z: -0.2280623, w: 0.96643025}
+      scale: {x: 1.0000004, y: 1.0000004, z: 0.9999998}
+    - name: RightShin
+      parentName: RightThigh
+      position: {x: -8.1490726e-12, y: 0.0042063096, z: 1.3969838e-11}
+      rotation: {x: -0.09752298, y: -0.031855647, z: -0.009231963, w: 0.9946805}
+      scale: {x: 0.9999998, y: 1.0000007, z: 1.0000001}
+    - name: RightFoot
+      parentName: RightShin
+      position: {x: 8.105416e-11, y: 0.003218481, z: -6.984919e-12}
+      rotation: {x: 0.028041191, y: -0.71354526, z: -0.03134204, w: 0.69934577}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000004}
+    - name: RightFoot_end
+      parentName: RightFoot
+      position: {x: -0, y: 0.000927632, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SpineUp
+      parentName: SpineDown
+      position: {x: -0, y: 0.0019018142, z: 0}
+      rotation: {x: -0, y: -0.00000011920926, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftArm
+      parentName: SpineUp
+      position: {x: -0.002032929, y: 0.0021186897, z: -0.0004999995}
+      rotation: {x: 0.010970319, y: 0.01097011, z: 0.7070217, w: 0.7070217}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
+    - name: LeftForearm
+      parentName: LeftArm
+      position: {x: 8.8475643e-11, y: 0.003279859, z: 3.259629e-11}
+      rotation: {x: -0.015514106, y: 0.0000001057051, z: -5.9778754e-10, w: 0.99987966}
+      scale: {x: 1.0000005, y: 1.0000006, z: 0.99999976}
+    - name: LeftPalm
+      parentName: LeftForearm
+      position: {x: -3.108289e-10, y: 0.0026710953, z: -5.5879353e-11}
+      rotation: {x: -0, y: 7.1054265e-15, z: 1.1102229e-16, w: 1}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.99999976}
+    - name: LeftPalm_end
+      parentName: LeftPalm
+      position: {x: -0, y: 0.0018443274, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Neck
+      parentName: SpineUp
+      position: {x: -1.2389792e-23, y: 0.0026863574, z: 0}
+      rotation: {x: -0, y: -2.842171e-14, z: -0, w: 1}
+      scale: {x: 0.99999976, y: 0.9999998, z: 0.9999999}
+    - name: Head
+      parentName: Neck
+      position: {x: -1.2389791e-23, y: 0.00061053754, z: 7.105427e-17}
+      rotation: {x: -0, y: 2.842171e-14, z: -0, w: 1}
+      scale: {x: 1.0000007, y: 0.99999964, z: 0.99999917}
+    - name: Head_end
+      parentName: Head
+      position: {x: -0, y: 0.0024268792, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightArm
+      parentName: SpineUp
+      position: {x: 0.0020539798, y: 0.0021186897, z: -0.0005000005}
+      rotation: {x: 0.01104102, y: -0.011040811, z: -0.7070206, w: 0.7070206}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: RightForearm
+      parentName: RightArm
+      position: {x: -2.4214386e-10, y: 0.0032588183, z: -6.519258e-11}
+      rotation: {x: -0.015614333, y: -0.00000010570511, z: -0.0000000012597363, w: 0.99987817}
+      scale: {x: 1, y: 1.0000008, z: 1.0000001}
+    - name: RightPalm
+      parentName: RightForearm
+      position: {x: -3.0617228e-10, y: 0.002671093, z: 1.6763806e-10}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1.0000005, y: 1.0000004, z: 1}
+    - name: RightPalm_end
+      parentName: RightPalm
+      position: {x: -0, y: 0.0018443274, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: skinnedmesh_thekiwicoder
+      parentName: PED(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -209,13 +611,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class PlayerMovement
+public class PlayerMovementRB
 {
     private PlayerBase m_Player;
     private Vector3 m_currentTargetPosition;
 
-    public PlayerMovement(PlayerBase player)
+    public PlayerMovementRB(PlayerBase player)
     {
         m_Player = player;
     }
@@ -14,11 +14,14 @@ public class PlayerMovement
     {
         var input = m_Player.Controls.PlayerMovement.Moving.ReadValue<Vector3>();
         m_currentTargetPosition = GetDirection(m_Player, input);
-
         m_Player.Animations?.AnimationMove(m_currentTargetPosition);
         Rotation(m_currentTargetPosition);
-        Moving(m_currentTargetPosition);
-        GravityHandling();
+    }
+
+    public void FixedUpdate()
+    {
+        Moving(m_currentTargetPosition, Time.fixedDeltaTime);
+        //GravityHandling();
     }
 
     public Vector3 GetDirection(PlayerBase player, Vector3 inputPosition)
@@ -43,9 +46,10 @@ public class PlayerMovement
 
         return direction;
     }
-    private void Moving(Vector3 direction)
+
+    private void Moving(Vector3 direction, float fixedDeltaTime)
     {
-        m_Player.CharacterControllerPlayer.Move(direction + m_Player.Velocity * Time.deltaTime);
+        m_Player.RB.MovePosition(direction + m_Player.Velocity * fixedDeltaTime);
     }
 
     private void Rotation(Vector3 direction)
@@ -57,18 +61,18 @@ public class PlayerMovement
         }
     }
 
-    public void GravityHandling()
-    {
-        if (!IsGrounded() || m_Player.Velocity.y > 0)
-        {
-            m_Player.Velocity.y -= m_Player.GetGravityForce() * Time.deltaTime;
-            Debug.Log("Тянем вниз.");
-        }
-        else
-        {
-            m_Player.Velocity.y = 0f;
-        }
-    }
+    //public void GravityHandling()
+    //{
+    //    if (!IsGrounded() || m_Player.Velocity.y > 0)
+    //    {
+    //        m_Player.Velocity.y -= m_Player.GetGravityForce() * Time.deltaTime;
+    //        Debug.Log("Тянем вниз.");
+    //    }
+    //    else
+    //    {
+    //        m_Player.Velocity.y = 0f;
+    //    }
+    //}
 
     public bool IsGrounded()
     {
