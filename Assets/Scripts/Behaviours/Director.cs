@@ -53,7 +53,6 @@ namespace Netologia.TowerDefence.Behaviors
 			//Find new targets
 			_towers.ManualUpdate();
 			_interface.ManualUpdate();
-			_wave.ManualUpdate();
 			//Last wave
 			if (_startFindWin && _units.CountActive == 0)
 				_interface.GameWin();

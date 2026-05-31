@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Behaviours
 {
-	public class WaveController : MonoBehaviour, Director.IManualUpdate
+	public class WaveController : MonoBehaviour
     {
 		private UnitSystem _units;				//injected
 		private WavePresetSettings _settings;	//injected
@@ -35,7 +35,7 @@ namespace Behaviours
 			return path;
 		}
 
-		public void ManualUpdate()
+		private void Update()
 		{
 			//delaying
 			if (Delay > 0)

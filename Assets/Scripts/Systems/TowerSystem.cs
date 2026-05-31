@@ -3,23 +3,24 @@ using Netologia.TowerDefence;
 using Netologia.TowerDefence.Behaviors;
 using UnityEngine;
 using Zenject;
-using static UnityEngine.GraphicsBuffer;
 
 namespace Netologia.Systems
 {
-	public class TowerSystem : GameObjectPoolContainer<Tower>, Director.IManualUpdate
-	{
-		private UnitSystem _units;				//injected
-		private ProjectileSystem _projectiles;	//injected
+    public class TowerSystem : GameObjectPoolContainer<Tower>, Director.IManualUpdate
+    {
+        private UnitSystem _units;              //injected
+        private ProjectileSystem _projectiles;  //injected
 
-		public void ManualUpdate()
-		{
+        public void ManualUpdate()
+        {
+            var time = TimeManager.DeltaTime;
             foreach (var pair in this)
                 foreach (var tower in pair)
-				{
-					if (tower.DecrementAttackReload(Time.deltaTime))
+                {
+                    if (tower.DecrementAttackReload(time))
                         continue;
 
+                    // Поиск цели
                     if (!tower.HasTarget || !IsTargetValid(tower, tower.Target, tower.Range))
                     {
                         var target = _units.FindTarget(tower.transform.position, tower.Range);
@@ -28,17 +29,15 @@ namespace Netologia.Systems
                             tower.Target = target;
                             Debug.Log($"{tower.name} выбрал новую цель: {target.name}");
                         }
+                        // Если цель не найдена, пропускаем атаку
                         else
-                        {
-                            // Если цель не найдена, пропускаем атаку
                             continue;
-                        }
                     }
 
-                    // Проверяем, что цель всё ещё валидна (в зоне досягаемости и жива)
+                    // Проверяем, что цель в зоне досягаемости и жива
                     if (!IsTargetValid(tower, tower.Target, tower.Range))
                     {
-                        // Если цель стала некорректной, сбрасываем её и пропускаем атаку
+                        // Если цель стала некорректной, сбрасываем ее и пропускаем атаку
                         tower.Target = null;
                         continue;
                     }
@@ -47,7 +46,6 @@ namespace Netologia.Systems
                     var projectile = _projectiles[tower.Projectile].Get;
                     projectile.PrepareData(tower.transform.position, tower.Target, tower.Damage, tower.AttackElemental);
 
-                    // Выполняем атаку
                     tower.Attack();
                     Debug.Log($"{tower.name} атакует {tower.Target.name}");
                 }
@@ -63,18 +61,18 @@ namespace Netologia.Systems
         }
 
         public void OnDespawnUnit(int unitID)
-		{
-			foreach (var pair in this)
-				foreach (var tower in pair)
-					if (tower.TargetID == unitID)
-						tower.Target = null;
-		}
-		
-		[Inject]
-		private void Construct(UnitSystem units, ProjectileSystem projectiles)
-		{
-			_units = units;
-			_projectiles = projectiles;
-		}
-	}
+        {
+            foreach (var pair in this)
+                foreach (var tower in pair)
+                    if (tower.TargetID == unitID)
+                        tower.Target = null;
+        }
+
+        [Inject]
+        private void Construct(UnitSystem units, ProjectileSystem projectiles)
+        {
+            _units = units;
+            _projectiles = projectiles;
+        }
+    }
 }
