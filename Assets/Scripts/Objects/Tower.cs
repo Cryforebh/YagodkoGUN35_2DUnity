@@ -82,10 +82,13 @@ namespace Netologia.TowerDefence
 		public bool DecrementAttackReload(float delta)
 		{
 			_delay -= delta;
-			return _delay <= 0f;
+			return IsReloading();
 		}
-		
-		public void Attack()
+
+		public bool IsReloading() => _delay > 0f;
+
+
+        public void Attack()
 		{
 			_delay = AttackDelay;
 			if (_hasEffect)

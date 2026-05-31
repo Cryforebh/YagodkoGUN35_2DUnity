@@ -42,7 +42,40 @@ namespace Netologia.Systems
 
 		public void ManualUpdate()
 		{
-			//todo Netologia homework 
+			foreach(var pair in this)
+			{
+				foreach(var unit in pair)
+				{
+					if (unit.CurrentHealth <= 0)
+						DespawnUnit(unit, unit.transform.position);
+					else
+					{
+                        Vector3 targetPosition = _path[unit.PathIndex];
+                        Vector3 currentPosition = unit.transform.position;
+
+                        float distanceSquared = Vector3.SqrMagnitude(targetPosition - currentPosition);
+
+                        if (distanceSquared <= _arrivalDistance)
+                        {
+                            unit.PathIndex++;
+
+                            if (unit.PathIndex >= _path.Length)
+                            {
+                                DespawnUnit(unit, currentPosition);
+								_director.AddPlayerDamage(_constants.DamageToPlayer);
+                                continue;
+                            }
+
+                            targetPosition = _path[unit.PathIndex];
+                        }
+
+                        Vector3 direction = (targetPosition - currentPosition).normalized;
+
+                        Vector3 newPosition = currentPosition + direction * unit.MoveSpeed * Time.deltaTime;
+                        unit.transform.position = newPosition;
+                    }
+				}
+			}
 		}
 
 		private void DespawnUnit(Unit unit, in Vector3 position)

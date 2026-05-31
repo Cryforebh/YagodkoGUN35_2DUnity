@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Constants
   m_EditorClassIdentifier: 
   <SellPercent>k__BackingField: 0.7
-  <IceDebuffMoveSpeedMult>k__BackingField: 0.9
+  <IceDebuffMoveSpeedMult>k__BackingField: 0.7
   <IceDebuffDuration>k__BackingField: 2
   <IceDebuffMaxStack>k__BackingField: 3
   <FireDebuffDamageMult>k__BackingField: 0.01
   <FireDebuffDuration>k__BackingField: 2
   <FireDebuffMaxStack>k__BackingField: 3
+  <DamageToPlayer>k__BackingField: 20
