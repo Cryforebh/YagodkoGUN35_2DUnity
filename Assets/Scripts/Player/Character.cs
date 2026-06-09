@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Zenject;
 
 public class Character : MonoBehaviour, ICharacter
 {
