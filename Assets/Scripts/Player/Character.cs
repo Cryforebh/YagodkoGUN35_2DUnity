@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Character : MonoBehaviour, ICharacter
@@ -8,6 +9,8 @@ public class Character : MonoBehaviour, ICharacter
 
     public float SpeedMove => _speedMove;
 
+    public event Action OnDeath; 
+
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
@@ -17,4 +20,10 @@ public class Character : MonoBehaviour, ICharacter
     {
         _controller.Move(targetPosition);
     }
+
+    [ContextMenu("Death")]
+    public void Death()
+    {
+        OnDeath?.Invoke();
+    } 
 }

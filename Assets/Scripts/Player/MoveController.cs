@@ -3,9 +3,9 @@ using Zenject;
 
 public class MoveController : ITickable
 {
+    private readonly ICharacter _character;
+    private readonly MoveInput _input;
     private Vector3 _targetPosition;
-    private ICharacter _character;
-    private MoveInput _input;
 
     public MoveController(MoveInput input, ICharacter character)
     {
