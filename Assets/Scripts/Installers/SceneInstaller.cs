@@ -4,16 +4,11 @@ using Zenject;
 public class SceneInstaller : MonoInstaller
 {
     [SerializeField] private Character _player;
-    [SerializeField] private MoveInput _moveInput;
 
     public override void InstallBindings()
     {
-        Container.Bind<MoveInput>().FromInstance(_moveInput).AsSingle();
+        Container.Bind<MoveInput>().AsSingle();         // Create new (no MonoBehavior)
         Container.Bind<ICharacter>().To<Character>().FromInstance(_player).AsSingle();
-    }
-
-    public void Update()
-    {
-        _player.ManualUpdate();
+        Container.BindInterfacesTo<MoveController>().AsCached();    // Create new (no MonoBehavior) with all interfaces (to Update-Tick)
     }
 }
