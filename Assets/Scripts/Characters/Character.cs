@@ -1,6 +1,6 @@
-﻿using System;
-using Netologia.Quest.Characters.Player;
+﻿using Netologia.Quest.Characters.Player;
 using Netologia.Quest.Talks;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -21,7 +21,9 @@ namespace Netologia.Quest.Characters
 		[SerializeField]
 		private QuestInfo[] _quests;
 
-		public int QuestCount => _quests.Length;
+        private WorkerMovement _workerMovement;
+        public QuestInfo CurrentActiveQuest { get; private set; }
+        public int QuestCount => _quests.Length;
 		public bool MoveAccess { get; private set; } = true;
 
 		public Vector3 CirclePosition => _circleTrans.position;
@@ -37,11 +39,15 @@ namespace Netologia.Quest.Characters
 			
 			_circle.enabled = false;
 			_circleTrans = _circle.transform;
-		}
+
+			if (_quests.Length > 0)
+				CurrentActiveQuest = _quests[0];
+            _workerMovement = GetComponent<WorkerMovement>();
+        }
 		
 		public bool OnInteract(PlayerController controller)
 		{
-			if (TrySetQuest(controller) || TryGetQuest(controller))
+            if (TrySetQuest(controller) || TryGetQuest(controller))
 			{
 				//In dialog character can't move
 				MoveAccess = false;
@@ -60,9 +66,10 @@ namespace Netologia.Quest.Characters
 				{
 					//Выдаем новый квест
 					case QuestInfo.Status.New:
-						quest.State = QuestInfo.Status.Progress;
-						//todo add dialog text?
-						InformationBureau.CallOnShowDialog(quest.Question, false);
+                        CurrentActiveQuest = quest;
+                        quest.NextStage();
+                        //todo add dialog text?
+                        InformationBureau.CallOnShowDialog(quest.Question, false);
 						InformationBureau.CallOnQuestChanged(quest);
 						controller.ActiveQuests.Add(quest);
 						return true;
@@ -86,9 +93,11 @@ namespace Netologia.Quest.Characters
 			{
 				var quest = controller.ActiveQuests[i];
 				if(quest.Target != this) continue;
-				quest.State = QuestInfo.Status.Complete;
-				//todo add dialog text?
-				InformationBureau.CallOnShowDialog(quest.Answer, true);
+                CurrentActiveQuest = quest;
+                quest.SetComplete();
+				_workerMovement.SetIdlePointsForTargetOnCompleteStatus(quest.NewIdlePointForTargetOnQuestComplete);
+                //todo add dialog text?
+                InformationBureau.CallOnShowDialog(quest.Answer, true);
 				InformationBureau.CallOnQuestChanged(quest);
 				controller.ActiveQuests.RemoveAt(i);
 				return true;
@@ -96,8 +105,8 @@ namespace Netologia.Quest.Characters
 
 			return false;
 		}
-		
-		private void OnCancel()
+
+        private void OnCancel()
 		{
 			//Only talking bot
 			if (MoveAccess) return;

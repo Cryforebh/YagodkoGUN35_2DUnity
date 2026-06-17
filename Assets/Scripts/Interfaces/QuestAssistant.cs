@@ -130,8 +130,8 @@ namespace Netologia.Quest.Interfaces
 		[Serializable]
 		private struct Dialog
 		{
-			private const string Set = "---New Quest---";
-			private const string Get = "---Complete Quest---";
+			private const string Set = "---Новое Задание---";
+			private const string Get = "---Задание Завершенно---";
 			
 			[SerializeField]
 			private GameObject _dialog;

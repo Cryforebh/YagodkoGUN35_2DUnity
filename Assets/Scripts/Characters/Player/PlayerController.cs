@@ -65,6 +65,8 @@ namespace Netologia.Quest.Characters.Player
             var ray = _camera.ScreenPointToRay(position);
             if (Physics.Raycast(ray, out var hit, _maxCameraDistance, _hitcastMask, QueryTriggerInteraction.Ignore))
             {
+                
+
                 _currentTarget = hit.transform;
                 position = _currentTarget.TryGetComponent<Character>(out var character)
                     ? character.CirclePosition

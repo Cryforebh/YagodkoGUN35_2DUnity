@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace Netologia.Quest.Characters
 {
-	public abstract class BaseMovement : MonoBehaviour
+	public abstract class BaseMovement : MonoBehaviour, IManualUpdate
 	{
 		protected NavMeshAgent _agent;
 
@@ -30,7 +30,9 @@ namespace Netologia.Quest.Characters
 		public Vector3 EndPosition => _agent.pathEndPosition;
 		public int GetPath(Vector3[] array) => _agent.path.GetCornersNonAlloc(array);
 
-		public void SetPosition(Vector3 position)
+		public virtual void ManualUpdate() { }
+
+        public void SetPosition(Vector3 position)
 		{
 			_agent.SetDestination(position);
 		}

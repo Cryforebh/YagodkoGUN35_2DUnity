@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039268484967061296}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7651430295682703583}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2632694221245996804
 MeshFilter:
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7651430295682703586}
   - component: {fileID: 7651430295682703587}
   - component: {fileID: -8943733094411697983}
+  - component: {fileID: 5494848266488105240}
   m_Layer: 7
   m_Name: Bot
   m_TagString: Untagged
@@ -111,6 +112,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7651430295682703584}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 1.14, z: 7.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -119,7 +121,6 @@ Transform:
   - {fileID: 5683395124664761333}
   - {fileID: 1126671799469680525}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7651430295682703580
 CapsuleCollider:
@@ -129,10 +130,19 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7651430295682703584}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.3
-  m_Height: 1.2
+  m_Height: 1.1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!195 &7651430295682703581
@@ -146,17 +156,17 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 1.5
-  m_Acceleration: 0.5
+  m_Acceleration: 10
   avoidancePriority: 40
   m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.2
+  m_Height: 1.1
   m_BaseOffset: 0
   m_WalkableMask: 1
-  m_ObstacleAvoidanceType: 2
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &7651430295682703586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,14 +183,12 @@ MonoBehaviour:
   _objectName: Ivan
   _circle: {fileID: 711552802262635641}
   _quests:
-  - State: 0
+  - AllStageQuest: 000000000a00000014000000
+    State: 0
     Target: {fileID: 0}
+    NewIdlePointForTargetOnQuestComplete: []
     Short: 
-    FullDescription: "\u041F\u0440\u0438\u0432\u0435\u0442, \u0441\u043B\u0443\u0448\u0430\u0439,
-      \u0430 \u043E\u0442\u043D\u0435\u0441\u0438, \u043F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430
-      \u043C\u043E\u0439 \u0431\u0443\u0442\u0435\u0440 \u041F\u0435\u0442\u0440\u0443\u0445\u0435,
-      \u043E\u043D \u0437\u0430\u0431\u044B\u043B\u043B \u043F\u0435\u0440\u0435\u043A\u0443\u0441
-      \u0441\u0435\u0433\u043E\u0434\u043D\u044F"
+    Question: 
     Answer: "\u041E\u0433\u043E! \u042D\u0442\u043E \u043E\u0442 \u0412\u0430\u043D\u044C\u043A\u0430?
       \u0420\u0435\u0441\u043F\u0435\u043A\u0442!"
 --- !u!114 &7651430295682703587
@@ -196,13 +204,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _message: {fileID: 5959892150369436086, guid: 756e92368d261684b92aa19159e9fa7f, type: 3}
-  _workerFeature: -1
-  _characterFeature: -1
-  _talkDelay: 5
+  _workerFeature: 0
+  _characterFeature: 0
+  _talkDelay: 7
   _silenceDelay:
     Min: 5
     Max: 10
-  _talkRadius: 4
+  _talkRadius: 2
 --- !u!114 &-8943733094411697983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,12 +223,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bece52a8a1f24d51b62e8d6667777b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _points: []
+  _movementPoints: []
+  _movementPointsStateProgress: []
+  _movementPointsStateComplite: []
+  _radiusSerchIdle: 15
+  _isDebagInfo: 0
+--- !u!208 &5494848266488105240
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651430295682703584}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.35, y: 0.55, z: 0.35}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &7876180710065266839
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 7651430295682703583}
     m_Modifications:
     - target: {fileID: 2563297373110213474, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
@@ -276,6 +305,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5436741564957258347, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2754539136904922245}
   m_SourcePrefab: {fileID: 100100000, guid: 6c7f06c6a702d4d41bba4b5576adc82c, type: 3}
 --- !u!1 &2755920421904290556 stripped
 GameObject:
