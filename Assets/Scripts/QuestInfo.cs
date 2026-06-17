@@ -23,7 +23,9 @@ namespace Netologia.Quest
 		[HideInInspector]
 		public Status State;
 
-		public Character Target;
+		public bool СonditionLaser = false;
+		public Receiver ReceiverTarget;
+        public Character Target;
 		public List<MovementPointData> NewIdlePointForTargetOnQuestComplete;
 		public string Short;
 		public string Question;
@@ -32,7 +34,17 @@ namespace Netologia.Quest
 		public override string ToString()
 			=> $"{Target.Name} Status: {State}";
 
-		public void SetStage(uint numStage)
+		public bool IsContitionComplete
+		{
+			get
+			{
+				if (ReceiverTarget)
+					return ReceiverTarget.IsActive;
+				return true;
+			}
+		}
+
+        public void SetStage(uint numStage)
 		{
 			if (State == Status.Complete) return;
 
@@ -67,6 +79,9 @@ namespace Netologia.Quest
 			{
                 if (stage > GetStage())
 				{
+					if (СonditionLaser && State == Status.Progress)
+						if (!IsContitionComplete)
+							return;
                     SetStage(stage);
 					return;
                 }

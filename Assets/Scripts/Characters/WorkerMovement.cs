@@ -74,8 +74,8 @@ namespace Netologia.Quest.Characters
 
             if (_isDebagInfo)
             {
-                Debug.Log("Текущая точка: " + _currentPoint.name);
-                Debug.Log("Расстояние до точки: " + distanceToDestination);
+                Debug.Log(name + "- Текущая точка: " + _currentPoint.name);
+                Debug.Log(name + "- Расстояние до точки: " + distanceToDestination);
             }
 
             if (distanceToDestination <= _currentPoint.Radius)

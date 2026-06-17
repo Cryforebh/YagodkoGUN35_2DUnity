@@ -75,7 +75,9 @@ namespace Netologia.Quest.Characters
 						return true;
 					//Не выдаем новый квест, пока есть в прогрессе
 					case QuestInfo.Status.Progress:
-						return false;
+						//if (quest.IsContitionComplete)
+						//	return true;
+                        return false;
 					//Пропускаем выполненные квесты
 					case QuestInfo.Status.Complete:
 						continue;
@@ -92,7 +94,7 @@ namespace Netologia.Quest.Characters
 			for(int i = 0, iMax = controller.ActiveQuests.Count; i < iMax; i++)
 			{
 				var quest = controller.ActiveQuests[i];
-				if(quest.Target != this) continue;
+				if(quest.Target != this || !quest.IsContitionComplete) continue;
                 CurrentActiveQuest = quest;
                 quest.SetComplete();
 				_workerMovement.SetIdlePointsForTargetOnCompleteStatus(quest.NewIdlePointForTargetOnQuestComplete);

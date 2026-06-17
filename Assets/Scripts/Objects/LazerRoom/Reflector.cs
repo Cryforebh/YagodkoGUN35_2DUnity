@@ -1,22 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using Netologia.Quest;
+using Netologia.Quest.Characters.Player;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Zenject;
 
-public class Reflector : MonoBehaviour
+public class Reflector : LaserElementBase
 {
-    public float rotationStep = 90f; // Шаг поворота
-    private int currentRotation = 0;
+    private Vector3 _normal;
 
-    public Vector3 GetNormal()
+    public bool MoveAccess { get; private set; } = true;
+
+    protected override void Start()
     {
-        float angle = currentRotation * rotationStep;
-        Quaternion rot = Quaternion.Euler(0, angle, 0);
-        return rot * Vector3.up; // Нормаль зависит от ориентации
+        base.Start();
+        InformationBureau.OnDialogClose += OnCancel;
     }
 
-    public void Rotate()
+    public void SetNormal(Vector3 normal) => _normal = normal;
+
+    public bool OnInteract(PlayerController controller)
     {
-        currentRotation = (currentRotation + 1) % 4;
-        transform.rotation = Quaternion.Euler(0, currentRotation * rotationStep, 0);
+        if (MoveAccess)
+        {
+            MoveAccess = false;
+            return true;
+        }
+        return false;
+    }
+
+    private void OnCancel()
+    {
+        if (MoveAccess) return;
+        MoveAccess = true;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        InformationBureau.OnDialogClose -= OnCancel;
     }
 }
