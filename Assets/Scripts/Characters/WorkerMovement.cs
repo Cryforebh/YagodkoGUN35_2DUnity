@@ -76,7 +76,8 @@ namespace Netologia.Quest.Characters
             if (_thisCharacter.MoveAccess && _isDialogue)
             {
                 _isDialogue = false;
-                _isOnPoint = true;
+                //_isOnPoint = true;
+                ResetIdlePoint();
             }
 
             if (!_thisCharacter.MoveAccess)
@@ -109,6 +110,15 @@ namespace Netologia.Quest.Characters
             }
         }
 
+        private void ResetIdlePoint()
+        {
+            CheckCurrentStateQuest();
+            _isOnPoint = false;
+            _currentTime = 0;
+            ProcessSetupNextPoint();
+            OnExitPoint?.Invoke();
+        }
+
         private void IdleUpdate()
         {
             if (!_isOnPoint || _isDialogue) return;
@@ -118,11 +128,7 @@ namespace Netologia.Quest.Characters
             _currentTime += TimeManager.DeltaTime;
             if (_currentTime >= _timeDelayIdlePoint)
             {
-                CheckCurrentStateQuest();
-                _isOnPoint = false;
-                _currentTime = 0;
-                ProcessSetupNextPoint();
-                OnExitPoint?.Invoke();
+                ResetIdlePoint();
             }
         }
 
