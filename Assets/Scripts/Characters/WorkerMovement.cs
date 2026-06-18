@@ -1,4 +1,5 @@
 ﻿
+using Netologia.Quest.Characters.Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,9 +26,12 @@ namespace Netologia.Quest.Characters
         private float _accumulatedStuckTime = 0f;
         private float _previousRoundedDistance;
         private MovementPointData _currentPoint;
+        private PlayerController _playerController;
         private float _timeDelayIdlePoint;
         private bool _isOnPoint = false;
+        private bool _isDialogue = false;
         private int _indexPoint = -1;
+        private Transform _currentTargetPointPosition;
 
         public event Action OnEnterPoint;
         public event Action OnExitPoint;
@@ -35,9 +39,10 @@ namespace Netologia.Quest.Characters
         public float RadiusSerchIdle => _radiusSerchIdle;
 
         [Inject]
-        private void Construct(ManagerObjects managerObjects)
+        private void Construct(ManagerObjects managerObjects, PlayerController playerController)
         {
             _managerObjects = managerObjects;
+            _playerController = playerController;
         }
 
         protected override void Awake()
@@ -61,13 +66,31 @@ namespace Netologia.Quest.Characters
 
             CheckArrivalAtCurrentPoint();
             IdleUpdate();
+            PauseWorkOnDialog();
         }
 
         public void SetIdlePointsForTargetOnCompleteStatus(List<MovementPointData> newIdlePoints) => _newUseIdlePoints = newIdlePoints;
 
+        private void PauseWorkOnDialog()
+        {
+            if (_thisCharacter.MoveAccess && _isDialogue)
+            {
+                _isDialogue = false;
+                _isOnPoint = true;
+            }
+
+            if (!_thisCharacter.MoveAccess)
+            {
+                _isDialogue = true;
+                _agent.destination = transform.position;
+                RotateTowardsDirection((_playerController.transform.position - transform.position).normalized);
+            }
+        }
+
         private void CheckArrivalAtCurrentPoint()
         {
-            if (_isOnPoint && _thisCharacter.MoveAccess) return;
+            if (_isOnPoint || _isDialogue) 
+                return; 
 
             float distanceToDestination = Vector3.Distance(transform.position, _currentPoint.ActionPointPosition);
             HandleStuckAgentWithTimeout(distanceToDestination);
@@ -88,7 +111,7 @@ namespace Netologia.Quest.Characters
 
         private void IdleUpdate()
         {
-            if (!_isOnPoint) return;
+            if (!_isOnPoint || _isDialogue) return;
 
             RotateTowardsDirection(_currentPoint.GetDirection(this.transform.position));
 
