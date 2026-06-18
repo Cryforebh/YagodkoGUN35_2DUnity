@@ -6,14 +6,15 @@ using Zenject;
 
 public abstract class LaserElementBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] protected Transform _rotateTargetTransform;
     [SerializeField] private MeshRenderer _circle;
     [SerializeField] private float _radiusActive = 3.5f;
 
     private Transform _circleTrans;
-    private InterfaceManager _interfaceManager; // Inject
-    private Slider _slider; // Inject
-    private Controls _input; // Inject
-    private PlayerController _playerController; // Inject
+    protected InterfaceManager _interfaceManager; // Inject
+    protected Slider _slider; // Inject
+    protected Controls _input; // Inject
+    protected PlayerController _playerController; // Inject
 
     private bool _mouseOnObject = false;
     private bool _isActive = false;
@@ -21,7 +22,7 @@ public abstract class LaserElementBase : MonoBehaviour, IPointerEnterHandler, IP
     public Vector3 CirclePosition => _circleTrans.position;
 
     [Inject]
-    protected void Construct(InterfaceManager interfaceManager, Controls input, PlayerController player)
+    private void Construct(InterfaceManager interfaceManager, Controls input, PlayerController player)
     {
         _interfaceManager = interfaceManager;
         _input = input;
@@ -92,9 +93,9 @@ public abstract class LaserElementBase : MonoBehaviour, IPointerEnterHandler, IP
 
     private void OnSliderValueChanged(float value)
     {
-        Vector3 euler = transform.localEulerAngles;
+        Vector3 euler = _rotateTargetTransform.localEulerAngles;
         euler.y = value; // меняем угол по оси Y
-        transform.localEulerAngles = euler;
+        _rotateTargetTransform.localEulerAngles = euler;
     }
 
     protected virtual void OnDisable()

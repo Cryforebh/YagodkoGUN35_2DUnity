@@ -1,9 +1,6 @@
 using Netologia.Quest;
 using Netologia.Quest.Characters.Player;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Zenject;
 
 public class Reflector : LaserElementBase
 {

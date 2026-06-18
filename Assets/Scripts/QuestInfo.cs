@@ -24,7 +24,7 @@ namespace Netologia.Quest
 		public Status State;
 
 		public bool СonditionLaser = false;
-		public Receiver ReceiverTarget;
+		public Receiver[] ReceiverTargets;
         public Character Target;
 		public List<MovementPointData> NewIdlePointForTargetOnQuestComplete;
 		public string Short;
@@ -38,8 +38,16 @@ namespace Netologia.Quest
 		{
 			get
 			{
-				if (ReceiverTarget)
-					return ReceiverTarget.IsActive;
+				if (ReceiverTargets.Length > 0)
+				{
+					var active = false;
+					foreach (var target in ReceiverTargets)
+					{
+                        if (!target.IsActive) return false;
+                        active = target.IsActive;
+                    }
+					return active;
+				}
 				return true;
 			}
 		}

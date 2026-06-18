@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,7 @@ public class InterfaceManager : MonoBehaviour
 
     private Slider _sliderLaserPanel;
 
-    private void Start()
+    private void Awake()
     {
         _sliderLaserPanel = _laserPanel.GetComponentInChildren<Slider>();
     }
