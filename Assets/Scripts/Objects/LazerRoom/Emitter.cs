@@ -32,9 +32,6 @@ public class Emitter : LaserElementBase
         _lineRenderer = gameObject.GetComponent<LineRenderer>();
         _lineRenderer.startColor = _laserColor;
         _lineRenderer.endColor = _laserColor;
-
-        InformationBureau.OnDialogClose += OnCancel;
-
         _updateTask = UpdateLoopAsync();
     }
 
@@ -172,27 +169,10 @@ public class Emitter : LaserElementBase
         _lineRenderer.SetPositions(points.ToArray());
     }
 
-    public bool OnInteract(PlayerController controller)
-    {
-        if (MoveAccess)
-        {
-            MoveAccess = false;
-            return true;
-        }
-        return false;
-    }
-
-    private void OnCancel()
-    {
-        if (MoveAccess) return;
-        MoveAccess = true;
-    }
-
     protected override void OnDisable()
     {
         base.OnDisable();
         _updateTask.ToCancellationToken(); // отмена задачи
         _lineRenderer = null;
-        InformationBureau.OnDialogClose -= OnCancel;
     }
 }
