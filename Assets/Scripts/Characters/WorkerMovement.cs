@@ -31,7 +31,6 @@ namespace Netologia.Quest.Characters
         private bool _isOnPoint = false;
         private bool _isDialogue = false;
         private int _indexPoint = -1;
-        private Transform _currentTargetPointPosition;
 
         public event Action OnEnterPoint;
         public event Action OnExitPoint;
