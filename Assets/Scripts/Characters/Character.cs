@@ -94,7 +94,7 @@ namespace Netologia.Quest.Characters
 			for(int i = 0, iMax = controller.ActiveQuests.Count; i < iMax; i++)
 			{
 				var quest = controller.ActiveQuests[i];
-				if(quest.Target != this || !quest.IsContitionComplete) continue;
+				if(quest.Target != this || !quest.IsConditionComplete) continue;
                 CurrentActiveQuest = quest;
                 quest.SetComplete();
 				_workerMovement.SetIdlePointsForTargetOnCompleteStatus(quest.NewIdlePointForTargetOnQuestComplete);

@@ -23,7 +23,7 @@ namespace Netologia.Quest
 		[HideInInspector]
 		public Status State;
 
-		public bool СonditionLaser = false;
+		public bool ConditionLaser = false;
 		public Receiver[] ReceiverTargets;
         public Character Target;
 		public List<MovementPointData> NewIdlePointForTargetOnQuestComplete;
@@ -34,7 +34,7 @@ namespace Netologia.Quest
 		public override string ToString()
 			=> $"{Target.Name} Status: {State}";
 
-		public bool IsContitionComplete
+		public bool IsConditionComplete
 		{
 			get
 			{
@@ -56,7 +56,7 @@ namespace Netologia.Quest
 		{
 			if (State == Status.Complete) return;
 
-            uint maxStage = SerchMaxStage();
+            uint maxStage = SearchMaxStage();
 
             if (numStage >= maxStage)
             {
@@ -87,8 +87,8 @@ namespace Netologia.Quest
 			{
                 if (stage > GetStage())
 				{
-					if (СonditionLaser && State == Status.Progress)
-						if (!IsContitionComplete)
+					if (ConditionLaser && State == Status.Progress)
+						if (!IsConditionComplete)
 							return;
                     SetStage(stage);
 					return;
@@ -96,11 +96,11 @@ namespace Netologia.Quest
             }
         }
 
-		public void SetComplete() => SetStage(SerchMaxStage());
+		public void SetComplete() => SetStage(SearchMaxStage());
 
 		public uint GetStage() => _currentStageQuest;
 
-		private uint SerchMaxStage()
+		private uint SearchMaxStage()
 		{
 			if (_maxStage > 0) return _maxStage;
 
